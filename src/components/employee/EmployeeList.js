@@ -10,6 +10,7 @@ class EmployeeList extends Component {
                     this.props.employees.map(employee =>
                         <div key={employee.id}>
                             {employee.name}
+                            <button onClick={() => this.props.fireEmployee(employee.id)}>You're Fired</button>
                         </div>
                     )
                 }
