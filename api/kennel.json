@@ -32,27 +32,28 @@
   "animals": [
     {
       "id": 1,
-      "name": "Doodles"
+      "name": "Lily"
     },
     {
       "id": 2,
-      "name": "Jack"
-    },
-    {
-      "id": 3,
-      "name": "Angus"
-    },
-    {
-      "id": 4,
-      "name": "Henley"
+      "name": "Coco"
     },
     {
       "id": 5,
-      "name": "Derkins"
+      "name": "Ella",
+      "breed": "Golden Retriever"
     },
     {
-      "id": 6,
-      "name": "Checkers"
+      "name": "Dog",
+      "breed": "Dog",
+      "employeeId": 5,
+      "id": 6
+    },
+    {
+      "name": "New",
+      "breed": "Animal",
+      "employeeId": 2,
+      "id": 7
     }
   ],
   "owners": [

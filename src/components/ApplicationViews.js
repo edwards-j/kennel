@@ -4,40 +4,55 @@ import AnimalList from './animal/AnimalList'
 import LocationList from './location/LocationList'
 import EmployeeList from './employee/EmployeeList'
 import OwnerList from "./owner/ownerList"
+import dataManager from "./modules/dataManager"
+import AnimalDetail from './animal/AnimalDetail'
+import AnimalForm from './animal/AnimalForm'
+import EmployeeForm from './employee/EmployeeForm'
+import OwnerForm from './owner/OwnerForm'
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./ApplicationView.css"
 import "./animal/Animal.css"
 
-
 export default class ApplicationViews extends Component {
 
-    deleteAnimal = id => {
-        fetch(`http://localhost:5002/animals/${id}`, {
-            method: "DELETE"
-        })
-            .then(e => e.json())
-            .then(() => fetch(`http://localhost:5002/animals`))
-            .then(e => e.json())
-            .then(animals => this.setState({
-                animals: animals
-            }))
-    }
+    deleteAnimal = id => dataManager.removeAnimal(id)
+        .then(animals => this.setState({
+            animals: animals
+        }))
+
+    addAnimal = animal => dataManager.addAnimal(animal)
+        .then(() => dataManager.getAllAnimals())
+        .then(animals => this.setState({
+            animals: animals
+        }))
 
     fireEmployee = id => {
         //Deletes the employee from the database
         fetch(`http://localhost:5002/employees/${id}`, {
             method: "DELETE"
         })
-        .then(e => e.json())
-        //Gets the updated list of employees
-        .then(() => fetch(`http://localhost:5002/employees`))
-        .then(e => e.json())
-        //Updates state to match the database
+            .then(e => e.json())
+            //Gets the updated list of employees
+            .then(() => fetch(`http://localhost:5002/employees`))
+            .then(e => e.json())
+            //Updates state to match the database
+            .then(employees => this.setState({
+                employees: employees
+            }))
+    }
+
+    addEmployee = employee => dataManager.addEmployee(employee)
+        .then(() => dataManager.getAllEmployees())
         .then(employees => this.setState({
             employees: employees
         }))
-    }
+
+    addOwner = owner => dataManager.addOwner(owner)
+        .then(() => dataManager.getAllOwners())
+        .then(owners => this.setState({
+            owners: owners
+        }))
 
     removeOwner = id => {
         fetch(`http://localhost:5002/owners/${id}`, {
@@ -61,17 +76,13 @@ export default class ApplicationViews extends Component {
     componentDidMount() {
         const newState = {}
 
-        fetch("http://localhost:5002/animals")
-            .then(r => r.json())
+        dataManager.getAllAnimals()
             .then(animals => newState.animals = animals)
-            .then(() => fetch("http://localhost:5002/employees")
-                .then(r => r.json()))
+            .then(() => dataManager.getAllEmployees())
             .then(employees => newState.employees = employees)
-            .then(() => fetch("http://localhost:5002/locations"))
-            .then((r => r.json()))
+            .then(() => dataManager.getAllLocations())
             .then(locations => newState.locations = locations)
-            .then(() => fetch("http://localhost:5002/owners"))
-            .then(r => r.json())
+            .then(() => dataManager.getAllOwners())
             .then(owners => newState.owners = owners)
             .then(() => this.setState(newState))
     }
@@ -83,14 +94,38 @@ export default class ApplicationViews extends Component {
                     <Route exact path="/" render={() => {
                         return <LocationList locations={this.state.locations} />
                     }} />
-                    <Route exact path="/animals" render={() => {
-                        return <AnimalList deleteAnimal={this.deleteAnimal} animals={this.state.animals} />
+                    <Route exact path="/employees" render={(props) => {
+                        return <EmployeeList {...props}
+                            fireEmployee={this.fireEmployee}
+                            employees={this.state.employees} />
                     }} />
-                    <Route exact path="/employees" render={() => {
-                        return <EmployeeList fireEmployee={this.fireEmployee} employees={this.state.employees} />
+                    <Route exact path="/owners" render={(props) => {
+                        return <OwnerList  {...props}
+                        removeOwner={this.removeOwner}
+                         owners={this.state.owners} />
                     }} />
-                    <Route exact path="/owners" render={() => {
-                        return <OwnerList removeOwner={this.removeOwner} owners={this.state.owners} />
+                    <Route path="/animals/:animalId(\d+)" render={(props) => {
+                        return <AnimalDetail {...props} deleteAnimal={this.deleteAnimal} animals={this.state.animals} />
+                    }} />
+                    <Route exact path="/animals" render={(props) => {
+                        return <AnimalList {...props}
+                            deleteAnimal={this.deleteAnimal}
+                            animals={this.state.animals} />
+                    }} />
+                    <Route path="/animals/new" render={(props) => {
+                        return <AnimalForm {...props}
+                            addAnimal={this.addAnimal}
+                            employees={this.state.employees} />
+                    }} />
+                    <Route path="/employees/new" render={(props) => {
+                        return <EmployeeForm {...props}
+                            addEmployee={this.addEmployee}
+                        />
+                    }} />
+                    <Route path="/owners/new" render={(props) => {
+                        return <OwnerForm {...props}
+                            addOwner={this.addOwner}
+                        />
                     }} />
                 </div>
             </React.Fragment>
