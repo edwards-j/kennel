@@ -31,7 +31,7 @@ export default class ApplicationViews extends Component {
             animals: animals
         }))
 
-    fireEmployee = id => {
+    deleteEmployee = id => {
         //Deletes the employee from the database
         fetch(`http://localhost:5002/employees/${id}`, {
             method: "DELETE"
@@ -102,7 +102,9 @@ export default class ApplicationViews extends Component {
                     }} />
                     <Route exact path="/employees" render={props => {
                         if (this.isAuthenticated()) {
-                            return <EmployeeList deleteEmployee={this.deleteEmployee}
+                            return <EmployeeList
+                                deleteEmployee={this.deleteEmployee}
+                                animals={this.state.animals}
                                 employees={this.state.employees} />
                         } else {
                             return <Redirect to="/login" />
@@ -110,21 +112,23 @@ export default class ApplicationViews extends Component {
                     }} />
                     <Route exact path="/owners" render={(props) => {
                         if (this.isAuthenticated()) {
-                        return <OwnerList  {...props}
-                            removeOwner={this.removeOwner}
-                            owners={this.state.owners} />
+                            return <OwnerList  {...props}
+                                removeOwner={this.removeOwner}
+                                owners={this.state.owners} />
                         } else {
                             return <Redirect to="/login" />
                         }
                     }} />
                     <Route path="/animals/:animalId(\d+)" render={(props) => {
-                        return <AnimalDetail {...props} deleteAnimal={this.deleteAnimal} animals={this.state.animals} />
+                        return <AnimalDetail {...props}
+                            deleteAnimal={this.deleteAnimal}
+                            animals={this.state.animals} />
                     }} />
                     <Route exact path="/animals" render={(props) => {
                         if (this.isAuthenticated()) {
-                        return <AnimalList {...props}
-                            deleteAnimal={this.deleteAnimal}
-                            animals={this.state.animals} />
+                            return <AnimalList {...props}
+                                deleteAnimal={this.deleteAnimal}
+                                animals={this.state.animals} />
                         } else {
                             return <Redirect to="/login" />
                         }

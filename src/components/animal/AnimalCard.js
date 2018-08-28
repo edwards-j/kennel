@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-import dog from "./DogIcon.png"
+import dog from "./dog.png"
 import "./Animal.css"
 
 export default class AnimalCard extends Component {
