@@ -11,6 +11,14 @@
     {
       "id": 5,
       "name": "Clutch Nixon"
+    },
+    {
+      "name": "New employee",
+      "id": 6
+    },
+    {
+      "name": "Another one",
+      "id": 7
     }
   ],
   "locations": [
@@ -38,6 +46,12 @@
       "id": 5,
       "name": "Ella",
       "breed": "Golden Retriever"
+    },
+    {
+      "name": "New",
+      "breed": "new new",
+      "employeeId": 2,
+      "id": 6
     }
   ],
   "owners": [
@@ -52,6 +66,10 @@
     {
       "id": 3,
       "name": "Micah"
+    },
+    {
+      "name": "New",
+      "id": 4
     }
   ]
 }
