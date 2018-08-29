@@ -10,20 +10,20 @@ export default class AnimalDetail extends Component {
             user clicked on by looking at the `this.props.animals`
             collection that was passed down from ApplicationViews
         */
-        const animal = this.props.animals.find(a => a.id === parseInt(this.props.match.params.animalId)) || {}
+        const animal = this.props.animals.find(a => a.id === parseInt(this.props.match.params.animalId, 0)) || {}
 
         return (
             <section className="animal">
                 <div key={animal.id} className="card">
                     <div className="card-body">
                         <h4 className="card-title">
-                            <img src={dog} className="icon--dog" />
+                            <img src={dog} className="icon--dog" alt="dog icon"/>
                             {animal.name}
                         </h4>
                         <h6 className="card-title">{animal.breed}</h6>
-                        <a href="#"
+                        <a href=""
                             onClick={() => this.props.deleteAnimal(animal.id)
-                                            .then(() => this.props.history.push("/animals"))}
+                                        .then(() => this.props.history.push("/animals"))}
                             className="card-link">Delete</a>
                     </div>
                 </div>

@@ -1,12 +1,12 @@
 import React, { Component } from "react"
 
-
 export default class Login extends Component {
 
     // Set initial state
     state = {
         email: "",
-        password: ""
+        password: "",
+        remember: false
     }
 
     // Update state whenever an input field is edited
@@ -14,6 +14,14 @@ export default class Login extends Component {
         const stateToChange = {}
         stateToChange[evt.target.id] = evt.target.value
         this.setState(stateToChange)
+    }
+
+    handleRemember = () => {
+        this.state.remember ?
+            this.setState({ remember: false })
+            :
+            this.setState({ remember: true })
+
     }
 
     // Simplistic handler for login submit
@@ -24,13 +32,23 @@ export default class Login extends Component {
             For now, just store the email and password that
             the customer enters into local storage.
         */
-        localStorage.setItem(
-            "credentials",
-            JSON.stringify({
-                email: this.state.email,
-                password: this.state.password
-            })
-        )
+        if (this.state.remember) {
+            localStorage.setItem(
+                "credentials",
+                JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password
+                })
+            )
+        } else {
+            sessionStorage.setItem(
+                "credentials",
+                JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password
+                })
+            )
+        }
     }
 
     render() {
@@ -41,16 +59,20 @@ export default class Login extends Component {
                     Email address
                 </label>
                 <input onChange={this.handleFieldChange} type="email"
-                       id="email"
-                       placeholder="Email address"
-                       required="" autoFocus="" />
+                    id="email"
+                    placeholder="Email address"
+                    required="" autoFocus="" />
                 <label htmlFor="inputPassword">
                     Password
                 </label>
                 <input onChange={this.handleFieldChange} type="password"
-                       id="password"
-                       placeholder="Password"
-                       required="" />
+                    id="password"
+                    placeholder="Password"
+                    required="" />
+                <label htmlFor="checkbox">
+                    Remember me
+                </label>
+                <input type="checkbox" id="" onChange={this.handleRemember} />
                 <button type="submit">
                     Sign in
                 </button>

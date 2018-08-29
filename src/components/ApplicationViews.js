@@ -7,6 +7,7 @@ import OwnerList from "./owner/ownerList"
 import dataManager from "./modules/dataManager"
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
+import EditAnimal from './animal/EditAnimal'
 import EmployeeForm from './employee/EmployeeForm'
 import OwnerForm from './owner/OwnerForm'
 import Login from './Login/Login'
@@ -19,6 +20,7 @@ import "./animal/Animal.css"
 export default class ApplicationViews extends Component {
 
     isAuthenticated = () => localStorage.getItem("credentials") !== null
+    isSessionAuthenticated = () => Storage.getItem("credentials") !== null
 
     deleteAnimal = id => dataManager.removeAnimal(id)
         .then(animals => this.setState({
@@ -26,6 +28,12 @@ export default class ApplicationViews extends Component {
         }))
 
     addAnimal = animal => dataManager.addAnimal(animal)
+        .then(() => dataManager.getAllAnimals())
+        .then(animals => this.setState({
+            animals: animals
+        }))
+
+    editAnimal = (animalID, editedAnimal) => dataManager.editAnimal(animalID, editedAnimal)
         .then(() => dataManager.getAllAnimals())
         .then(animals => this.setState({
             animals: animals
@@ -101,7 +109,7 @@ export default class ApplicationViews extends Component {
                         return <LocationList locations={this.state.locations} />
                     }} />
                     <Route exact path="/employees" render={props => {
-                        if (this.isAuthenticated()) {
+                        if (this.isAuthenticated() || this.isSessionAuthenticated()) {
                             return <EmployeeList {...props}
                                 deleteEmployee={this.deleteEmployee}
                                 animals={this.state.animals}
@@ -112,7 +120,7 @@ export default class ApplicationViews extends Component {
                         }
                     }} />
                     <Route exact path="/owners" render={(props) => {
-                        if (this.isAuthenticated()) {
+                        if (this.isAuthenticated() || this.isSessionAuthenticated()) {
                             return <OwnerList  {...props}
                                 removeOwner={this.removeOwner}
                                 owners={this.state.owners} />
@@ -122,12 +130,14 @@ export default class ApplicationViews extends Component {
                     }} />
                     <Route path="/animals/:animalId(\d+)" render={(props) => {
                         return <AnimalDetail {...props}
+                            editAnimal={this.editAnimal}
                             deleteAnimal={this.deleteAnimal}
                             animals={this.state.animals} />
                     }} />
                     <Route exact path="/animals" render={(props) => {
-                        if (this.isAuthenticated()) {
+                        if (this.isAuthenticated() || this.isSessionAuthenticated()) {
                             return <AnimalList {...props}
+                                editAnimal={this.editAnimal}
                                 deleteAnimal={this.deleteAnimal}
                                 animals={this.state.animals} />
                         } else {
@@ -138,6 +148,12 @@ export default class ApplicationViews extends Component {
                         return <AnimalForm {...props}
                             addAnimal={this.addAnimal}
                             employees={this.state.employees} />
+                    }} />
+                    <Route path="/animals/edit/:animalId(\d+)" render={(props) => {
+                        return <EditAnimal {...props}
+                            editAnimal={this.editAnimal}
+                            addAnimal={this.addAnimal}
+                            animals={this.state.animals} />
                     }} />
                     <Route path="/employees/new" render={(props) => {
                         return <EmployeeForm {...props}
@@ -154,3 +170,4 @@ export default class ApplicationViews extends Component {
         )
     }
 }
+

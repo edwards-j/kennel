@@ -8,14 +8,18 @@ export default class AnimalCard extends Component {
         return (
             <div key={this.props.animal.id} className="card">
                 <div className="card-body">
-                    <h5 className="card-title">
-                        <img src={dog} className="icon--dog" />
+                    <div className="card-title">
+                        <img src={dog} className="icon--dog" alt="dog icon"/>
                         {this.props.animal.name}
                         <Link className="nav-link" to={`/animals/${this.props.animal.id}`}>Details</Link>
-                        <a href="#"
+                        <button
                             onClick={() => this.props.deleteAnimal(this.props.animal.id)}
-                            className="card-link">Discharge</a>
-                    </h5>
+                            className="card-link">Discharge</button>
+                        {/* <Link href=""
+                            onClick={()=> this.props.history.push(`/animals/edit/${this.props.animal.id}`)}
+                            className="card-link">Edit</Link> */}
+                            <Link className="nav-link" to={`/animals/edit/${this.props.animal.id}`}>edit</Link>
+                    </div>
                 </div>
             </div>
         )

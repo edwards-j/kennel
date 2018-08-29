@@ -32,6 +32,17 @@ export default Object.create(null, {
             }).then(e => e.json())
         }
     },
+    editAnimal: {
+        value: function (animalID, editedAnimal) {
+            return fetch(`${remoteURL}/animals/${animalID}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(editedAnimal)
+            }).then(e => e.json())
+        }
+    },
     getAllLocations: {
         value: function () {
             return fetch(`${remoteURL}/locations`).then(e => e.json())

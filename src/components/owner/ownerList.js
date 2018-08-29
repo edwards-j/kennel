@@ -14,12 +14,12 @@ export default class OwnerList extends Component {
                         Add New Owner
                 </button>
                 </div>
-                <section>
+                <section className="text-center">
                     <h4>Owners</h4>
                     {
                         this.props.owners.map(owners =>
                             <div key={owners.id} className="border m-2 p-1">
-                                {owners.name}
+                                <p>{owners.name}</p>
                                 <button className="btn btn-danger" onClick={() => this.props.removeOwner(owners.id)}>Remove Owner</button>
                             </div>
                         )

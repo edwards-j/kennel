@@ -1,24 +1,8 @@
 {
   "employees": [
     {
-      "id": 2,
-      "name": "Jordan Nelson"
-    },
-    {
-      "id": 4,
-      "name": "Blaise Roberts"
-    },
-    {
-      "id": 5,
-      "name": "Clutch Nixon"
-    },
-    {
-      "name": "New employee",
-      "id": 6
-    },
-    {
-      "name": "Another one",
-      "id": 7
+      "name": "New",
+      "id": 1
     }
   ],
   "locations": [
@@ -35,23 +19,10 @@
   ],
   "animals": [
     {
-      "id": 1,
-      "name": "Lily"
-    },
-    {
-      "id": 2,
-      "name": "Coco"
-    },
-    {
-      "id": 5,
-      "name": "Ella",
-      "breed": "Golden Retriever"
-    },
-    {
       "name": "New",
-      "breed": "new new",
-      "employeeId": 2,
-      "id": 6
+      "breed": "",
+      "employeeId": 1,
+      "id": 1
     }
   ],
   "owners": [
@@ -60,16 +31,8 @@
       "name": "Jonathan"
     },
     {
-      "id": 2,
-      "name": "Megan"
-    },
-    {
       "id": 3,
       "name": "Micah"
-    },
-    {
-      "name": "New",
-      "id": 4
     }
   ]
 }
